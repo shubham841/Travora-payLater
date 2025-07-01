@@ -356,17 +356,17 @@ const HeroSection = () => {
         </Carousel>
       </section>
 
-      <section id="faq" class="py-20 ">
-        <div class="container mx-auto px-6 max-w-4xl">
-          <div class="text-center mb-12">
-            <h2 class="text-3xl md:text-4xl font-bold text-gray-900">
+      <section id="faq" className="py-20 ">
+        <div className="container mx-auto px-6 max-w-4xl">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
               Frequently Asked Questions
             </h2>
           </div>
-          <div class="space-y-4">
+          <div className="space-y-4">
             {/* <!-- FAQ Item 1 --> */}
-            <details class="bg-white p-6 rounded-lg shadow-sm">
-              <summary class="font-semibold cursor-pointer flex justify-between items-center">
+            <details className="bg-white p-6 rounded-lg shadow-sm">
+              <summary className="font-semibold cursor-pointer flex justify-between items-center">
                 What is PayLater?
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -375,16 +375,16 @@ const HeroSection = () => {
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                   data-lucide="chevron-down"
-                  class="lucide lucide-chevron-down h-5 w-5 accordion-arrow transition-transform"
+                  className="lucide lucide-chevron-down h-5 w-5 accordion-arrow transition-transform"
                 >
                   <path d="m6 9 6 6 6-6"></path>
                 </svg>
               </summary>
-              <p class="mt-4 text-gray-600">
+              <p className="mt-4 text-gray-600">
                 PayLater is a "Book Now, Pay Later" platform that allows you to
                 book travel packages from verified agents without any upfront
                 payment. You can pay for your trip after you've completed it,
@@ -393,8 +393,8 @@ const HeroSection = () => {
               </p>
             </details>
             {/* <!-- FAQ Item 2 --> */}
-            <details class="bg-white p-6 rounded-lg shadow-sm">
-              <summary class="font-semibold cursor-pointer flex justify-between items-center">
+            <details className="bg-white p-6 rounded-lg shadow-sm">
+              <summary className="font-semibold cursor-pointer flex justify-between items-center">
                 Is there any interest on the EMI?
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -403,24 +403,24 @@ const HeroSection = () => {
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                   data-lucide="chevron-down"
-                  class="lucide lucide-chevron-down h-5 w-5 accordion-arrow transition-transform"
+                  className="lucide lucide-chevron-down h-5 w-5 accordion-arrow transition-transform"
                 >
                   <path d="m6 9 6 6 6-6"></path>
                 </svg>
               </summary>
-              <p class="mt-4 text-gray-600">
+              <p className="mt-4 text-gray-600">
                 Yes, our EMI options come with a nominal interest rate, which is
                 clearly communicated during the booking process. The EMI
                 calculator provides an estimate. There are no hidden charges.
               </p>
             </details>
             {/* <!-- FAQ Item 3 --> */}
-            <details class="bg-white p-6 rounded-lg shadow-sm">
-              <summary class="font-semibold cursor-pointer flex justify-between items-center">
+            <details className="bg-white p-6 rounded-lg shadow-sm">
+              <summary className="font-semibold cursor-pointer flex justify-between items-center">
                 How are the travel agents verified?
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -429,16 +429,16 @@ const HeroSection = () => {
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                   data-lucide="chevron-down"
-                  class="lucide lucide-chevron-down h-5 w-5 accordion-arrow transition-transform"
+                  className="lucide lucide-chevron-down h-5 w-5 accordion-arrow transition-transform"
                 >
                   <path d="m6 9 6 6 6-6"></path>
                 </svg>
               </summary>
-              <p class="mt-4 text-gray-600">
+              <p className="mt-4 text-gray-600">
                 We have a rigorous onboarding process for all travel agents.
                 This includes verifying their business registration, GSTIN, past
                 customer reviews, and operational history to ensure you travel
@@ -446,8 +446,8 @@ const HeroSection = () => {
               </p>
             </details>
             {/* <!-- FAQ Item 4 --> */}
-            <details class="bg-white p-6 rounded-lg shadow-sm">
-              <summary class="font-semibold cursor-pointer flex justify-between items-center">
+            <details className="bg-white p-6 rounded-lg shadow-sm">
+              <summary className="font-semibold cursor-pointer flex justify-between items-center">
                 What documents are required for KYC?
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -456,16 +456,16 @@ const HeroSection = () => {
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                   data-lucide="chevron-down"
-                  class="lucide lucide-chevron-down h-5 w-5 accordion-arrow transition-transform"
+                  className="lucide lucide-chevron-down h-5 w-5 accordion-arrow transition-transform"
                 >
                   <path d="m6 9 6 6 6-6"></path>
                 </svg>
               </summary>
-              <p class="mt-4 text-gray-600">
+              <p className="mt-4 text-gray-600">
                 Our digital KYC process is quick and simple. You will typically
                 need your PAN card, Aadhaar card for address proof, and you'll
                 be asked to take a live selfie for verification.

@@ -119,3 +119,12 @@
     @apply bg-background text-foreground;
   }
 }
+
+.input-style {
+  @apply w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500;
+}
+
+.upload-box {
+  @apply flex items-center justify-center border-2 border-dashed border-gray-300 p-6 rounded-md text-gray-500 text-sm text-center;
+  min-height: 120px;
+}

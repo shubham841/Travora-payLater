@@ -59,7 +59,7 @@ export default function EMICalculator() {
           min={0}
           max={100000} // max EMI you expect
           value={emi}
-        
+          readOnly
           className="w-full accent-blue-600 cursor-not-allowed opacity-70"
         />
       </div>

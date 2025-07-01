@@ -25,7 +25,7 @@ const Header = () => {
         <div className="rightSide flex items-center">
           <div className="space-x-2 md:space-x-6 mr-32">
             <DropdownMenu>
-              <DropdownMenuTrigger>
+              <DropdownMenuTrigger asChild>
                 <Button>
                   <span className="hidden  lg:block text-black text-lg ">
                     Packages
@@ -42,7 +42,7 @@ const Header = () => {
               </DropdownMenuContent>
             </DropdownMenu>
             <DropdownMenu>
-              <DropdownMenuTrigger>
+              <DropdownMenuTrigger asChild>
                 <Button>
                   <span className="hidden lg:block text-black text-lg">
                     Agents
@@ -60,7 +60,7 @@ const Header = () => {
             </DropdownMenu>
 
             <DropdownMenu>
-              <DropdownMenuTrigger>
+              <DropdownMenuTrigger asChild>
                 <Button>
                   <span className="hidden lg:block text-black text-lg">
                     Support
