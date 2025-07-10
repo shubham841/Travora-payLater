@@ -2,7 +2,7 @@
 import Image from "next/image";
 import React from "react";
 import { Button } from "./ui/button";
-import EMICalculator from "./emiCal";
+import EMICalculator from "./EmiCal";
 
 import {
   Carousel,
@@ -11,7 +11,11 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+
 import Link from "next/link";
+import Testimonials from "./Testimonials";
+import Header from "./Header";
+import Footer from "./Footer";
 
 const packages = [
   {
@@ -88,9 +92,23 @@ const packages = [
   },
 ];
 
+const partners = [
+  { name: "Company 1", image: "/placeholder.png" },
+  { name: "Company 2", image: "/placeholder.png" },
+  { name: "Company 3", image: "/placeholder.png" },
+  { name: "Company 4", image: "/placeholder.png" },
+  { name: "Company 5", image: "/placeholder.png" },
+  { name: "Company 6", image: "/placeholder.png" },
+  { name: "Company 7", image: "/placeholder.png" },
+  { name: "Company 8", image: "/placeholder.png" },
+];
+
 const HeroSection = () => {
-  return (
+  return <>
+
+  <Header/>
     <main>
+      {/* Herosection */}
       <section className="heroSection h-[730px] md:h-[650px] bg-custom-gradient flex flex-col lg:flex-row items-center justify-evenly">
         <div className="left px-8 md:py-6 lg:py-12  ">
           {/* travora headline */}
@@ -132,6 +150,7 @@ const HeroSection = () => {
         </div>
       </section>
 
+    {/* Travel in 3 steps */}
       <section className="w-full flex items-center justify-center  mt-48 mb-24  ">
         <div className="middle text-center">
           <h1 className="font-semibold text-5xl">Travel in 3 Easy Steps</h1>
@@ -140,9 +159,6 @@ const HeroSection = () => {
           </p>
         </div>
       </section>
-
-      {/* how it works */}
-
       <section className="bg-softBlue  w-full py-8 px-4">
         <div className="flex flex-col md:flex-row flex-wrap items-center justify-evenly gap-6">
           {/* Step 1: Choose your package */}
@@ -200,16 +216,15 @@ const HeroSection = () => {
         </div>
       </section>
 
-      <div className="text-center px-4 mt-12">
-        <h1 className="font-bold text-3xl sm:text-4xl md:text-5xl leading-tight">
-          Why Choose <span className="text-blue-700">Pay Later</span>?
-        </h1>
-      </div>
-
       {/* why choose paylater */}
-
       <section className="mt-8 py-8 px-4">
-        <div className="flex flex-col md:flex-row flex-wrap justify-evenly items-stretch gap-6">
+        <div className="text-center px-4 my-12">
+          <h1 className="font-bold text-3xl sm:text-4xl md:text-5xl leading-tight">
+            Why Choose <span className="text-blue-700">Pay Later</span>?
+          </h1>
+        </div>
+
+        <div className=" flex flex-col md:flex-row flex-wrap justify-evenly items-stretch gap-6">
           {/* Zero Upfront Cost */}
           <div className="text-center w-full sm:w-[350px] md:w-[300px] p-4  ">
             <Image
@@ -282,6 +297,7 @@ const HeroSection = () => {
         </div>
       </section>
 
+     {/* EMI Calculator */}
       <section className="mt-16 px-4 flex flex-col lg:flex-row items-center gap-2">
         {/* Image Section */}
         <div className="w-full lg:w-1/2 flex justify-center">
@@ -300,6 +316,7 @@ const HeroSection = () => {
         </div>
       </section>
 
+      {/* Popular travel Package */}
       <section className="w-full flex items-center justify-center  mt-36 mb-24  ">
         <div className="middle text-center">
           <h1 className="font-semibold text-4xl">Popular Travel Packages</h1>
@@ -308,7 +325,7 @@ const HeroSection = () => {
           </p>
         </div>
       </section>
-
+     {/* Carousel of Popular travel Package */}
       <section className="px-4 py-10 w-full">
         <Carousel
           opts={{ align: "start", loop: true }}
@@ -356,17 +373,44 @@ const HeroSection = () => {
         </Carousel>
       </section>
 
+      {/* Connecting you with India's companies */}
+      <section className="py-12 px-4 md:px-8 overflow-hidden">
+      <h2 className="text-2xl md:text-3xl font-bold text-center mb-10">
+        Connecting you with India&apos;s most trusted travel partners
+      </h2>
+
+      <div className="relative w-full overflow-hidden ">
+        <div className="flex w-max animate-marquee-left whitespace-nowrap gap-8">
+          {partners.map((partner, index) => (
+            <div key={index} className="text-center shrink-0 w-32">
+              <div className="w-full h-24 sm:h-28 bg-gray-200 rounded-md flex items-center justify-center overflow-hidden">
+                <Image
+                  src={partner.image}
+                  alt={partner.name}
+                  width={100}
+                  height={60}
+                  className="object-contain"
+                />
+              </div>
+              <p className="mt-2 text-sm font-medium">{partner.name}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+      {/* Frequently Asked Questions */}
       <section id="faq" class="py-20 ">
-        <div class="container mx-auto px-6 max-w-4xl">
-          <div class="text-center mb-12">
-            <h2 class="text-3xl md:text-4xl font-bold text-gray-900">
+        <div className="container mx-auto px-6 max-w-4xl">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
               Frequently Asked Questions
             </h2>
           </div>
-          <div class="space-y-4">
+          <div className="space-y-4">
             {/* <!-- FAQ Item 1 --> */}
-            <details class="bg-white p-6 rounded-lg shadow-sm">
-              <summary class="font-semibold cursor-pointer flex justify-between items-center">
+            <details className="bg-white p-6 rounded-lg shadow-sm">
+              <summary className="font-semibold cursor-pointer flex justify-between items-center">
                 What is PayLater?
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -375,16 +419,16 @@ const HeroSection = () => {
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                   data-lucide="chevron-down"
-                  class="lucide lucide-chevron-down h-5 w-5 accordion-arrow transition-transform"
+                  className="lucide lucide-chevron-down h-5 w-5 accordion-arrow transition-transform"
                 >
                   <path d="m6 9 6 6 6-6"></path>
                 </svg>
               </summary>
-              <p class="mt-4 text-gray-600">
+              <p className="mt-4 text-gray-600">
                 PayLater is a "Book Now, Pay Later" platform that allows you to
                 book travel packages from verified agents without any upfront
                 payment. You can pay for your trip after you've completed it,
@@ -393,8 +437,8 @@ const HeroSection = () => {
               </p>
             </details>
             {/* <!-- FAQ Item 2 --> */}
-            <details class="bg-white p-6 rounded-lg shadow-sm">
-              <summary class="font-semibold cursor-pointer flex justify-between items-center">
+            <details className="bg-white p-6 rounded-lg shadow-sm">
+              <summary className="font-semibold cursor-pointer flex justify-between items-center">
                 Is there any interest on the EMI?
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -412,15 +456,15 @@ const HeroSection = () => {
                   <path d="m6 9 6 6 6-6"></path>
                 </svg>
               </summary>
-              <p class="mt-4 text-gray-600">
+              <p className="mt-4 text-gray-600">
                 Yes, our EMI options come with a nominal interest rate, which is
                 clearly communicated during the booking process. The EMI
                 calculator provides an estimate. There are no hidden charges.
               </p>
             </details>
             {/* <!-- FAQ Item 3 --> */}
-            <details class="bg-white p-6 rounded-lg shadow-sm">
-              <summary class="font-semibold cursor-pointer flex justify-between items-center">
+            <details className="bg-white p-6 rounded-lg shadow-sm">
+              <summary className="font-semibold cursor-pointer flex justify-between items-center">
                 How are the travel agents verified?
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -438,7 +482,7 @@ const HeroSection = () => {
                   <path d="m6 9 6 6 6-6"></path>
                 </svg>
               </summary>
-              <p class="mt-4 text-gray-600">
+              <p className="mt-4 text-gray-600">
                 We have a rigorous onboarding process for all travel agents.
                 This includes verifying their business registration, GSTIN, past
                 customer reviews, and operational history to ensure you travel
@@ -446,8 +490,8 @@ const HeroSection = () => {
               </p>
             </details>
             {/* <!-- FAQ Item 4 --> */}
-            <details class="bg-white p-6 rounded-lg shadow-sm">
-              <summary class="font-semibold cursor-pointer flex justify-between items-center">
+            <details className="bg-white p-6 rounded-lg shadow-sm">
+              <summary className="font-semibold cursor-pointer flex justify-between items-center">
                 What documents are required for KYC?
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -465,7 +509,7 @@ const HeroSection = () => {
                   <path d="m6 9 6 6 6-6"></path>
                 </svg>
               </summary>
-              <p class="mt-4 text-gray-600">
+              <p className="mt-4 text-gray-600">
                 Our digital KYC process is quick and simple. You will typically
                 need your PAN card, Aadhaar card for address proof, and you'll
                 be asked to take a live selfie for verification.
@@ -474,8 +518,14 @@ const HeroSection = () => {
           </div>
         </div>
       </section>
+
+      {/* Testimonials */}
+      <Testimonials />
     </main>
-  );
+    <Footer/>
+  </>
+    
+
 };
 
 export default HeroSection;
