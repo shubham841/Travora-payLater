@@ -1,15 +1,467 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
-  output   = "../src/generated/prisma"
 }
 
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+}
+
+enum UserStatus {
+  pending
+  active
+  suspended
+  rejected
+  deleted
+}
+
+enum BookingStatus {
+  kycPending
+  kycSubmitted
+  kycApproved
+  kycRejected
+  confirmed
+  completed
+  cancelled
+  refunded
+}
+
+enum PaymentStatus {
+  pending
+  paid
+  overdue
+  failed
+  refunded
+  disputed
+}
+
+enum PaymentMethod {
+  fullPayment
+  emi3
+  emi6
+  emi12
+}
+
+enum EmploymentType {
+  salaried
+  selfEmployed
+  student
+  unemployed
+  retired
+}
+
+enum TicketStatus {
+  open
+  inProgress
+  resolved
+  closed
+}
+
+enum TicketPriority {
+  low
+  medium
+  high
+  urgent
+}
+
+enum DocumentType {
+  idProof
+  businessRegistration
+  selfie
+  ticket
+  voucher
+  profilePicture
+  invoice
+  contract
+  other
+}
+
+enum NotificationStatus {
+  pending
+  sent
+  delivered
+  failed
+  read
+}
+
+enum NotificationType {
+  email
+  sms
+  push
+  inApp
+}
+
+enum ReviewStatus {
+  pending
+  approved
+  rejected
+  flagged
+}
+
+model User {
+  id            String     @id @default(cuid())
+  email         String     @unique
+  passwordHash  String
+  fullName      String
+  mobileNumber  String     @unique
+  profileImage  String?
+  dateOfBirth   DateTime?  @db.Date
+  status        UserStatus @default(active)
+  deletedAt     DateTime?  
+  deletedBy     String?    
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+  lastLoginAt   DateTime?
+  agent         Agent?
+  customer      Customer?
+  admin         AdminUser?
+  supportTickets SupportTicket[]
+  ticketMessages TicketMessage[]
+  documents     Document[]
+  notifications Notification[]
+  reviews       Review[]
+}
+
+model Agent {
+  id                    String     @id @default(cuid())
+  userId                String     @unique
+  agencyName            String
+  agencyAddress         String
+  gstin                 String?    @unique
+  bankAccountNumber     String
+  bankIfsc              String
+  bankAccountHolderName String
+  panNumber             String?
+  aadhaarNumber         String?
+  status                UserStatus @default(pending)
+  referralCode          String?    @unique
+  totalEarnings         Decimal    @default(0.00) @db.Decimal(12, 2)
+  commissionRate        Decimal    @default(10.00) @db.Decimal(5, 2)
+  rating                Decimal?   @db.Decimal(3, 2)
+  totalReviews          Int        @default(0)
+  verifiedAt            DateTime?
+  verifiedBy            String?
+  deletedAt             DateTime?
+  deletedBy             String?    
+  user         User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  packages     Package[]
+  bookings     Booking[]
+  commissions  AgentCommission[]
+  transactions Transaction[]
+  reviews      Review[]
+}
+
+model Customer {
+  id             String          @id @default(cuid())
+  userId         String          @unique
+  panNumber      String?
+  aadhaarNumber  String?
+  employmentType EmploymentType?
+  monthlyIncome  Decimal?        @db.Decimal(10, 2)
+  address        String?
+  city           String?
+  state          String?
+  pincode        String?
+  kycStatus      String          @default("pending")
+  riskScore      Int             @default(0)
+  creditLimit    Decimal         @default(0.00) @db.Decimal(10, 2)
+  totalBookings  Int             @default(0)
+  deletedAt      DateTime?       
+  deletedBy      String?         
+  user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  bookings     Booking[]
+  kycData      KycData[]
+  transactions Transaction[]
+  reviews      Review[]
+}
+
+model AdminUser {
+  id          String     @id @default(cuid())
+  userId      String     @unique
+  role        String     @default("admin")
+  permissions Json       @default("{}")
+  deletedAt   DateTime?  
+  deletedBy   String?    
+  user               User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  assignedTickets    SupportTicket[] @relation("AssignedTickets")
+  resolvedTickets    SupportTicket[] @relation("ResolvedTickets")
+  systemSettings     SystemSetting[]
+}
+
+model Package {
+  id                String   @id @default(cuid())
+  agentId           String
+  title             String
+  destination       String
+  category          String
+  durationNights    Int
+  durationDays      Int
+  description       String?
+  detailedItinerary String?
+  inclusions        String[]
+  exclusions        String[]
+  price             Decimal  @db.Decimal(10, 2)
+  maxOccupancy      Int      @default(2)
+  isActive          Boolean  @default(true)
+  isFeatured        Boolean  @default(false)
+  viewCount         Int      @default(0)
+  bookingCount      Int      @default(0)
+  tags              String[]
+  averageRating     Decimal? @db.Decimal(3, 2)
+  totalReviews      Int      @default(0)
+  deletedAt         DateTime? 
+  deletedBy         String?   
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  agent    Agent          @relation(fields: [agentId], references: [id], onDelete: Cascade)
+  bookings Booking[]
+  images   PackageImage[]
+  reviews  Review[]
+}
+
+model KycData {
+  id                         String    @id @default(cuid())
+  customerId                 String
+  aadhaarVerified            Boolean   @default(false)
+  panVerified                Boolean   @default(false)
+  selfieUrl                  String?
+  faceMatchScore             Decimal?  @db.Decimal(5, 2)
+  livenessCheckPassed        Boolean   @default(false)
+  documentVerificationStatus String    @default("pending")
+  riskAssessmentScore        Int       @default(0)
+  incomeVerificationStatus   String    @default("pending")
+  overallStatus              String    @default("pending")
+  approvedBy                 String?
+  approvedAt                 DateTime?
+  rejectionReason            String?
+  createdAt                  DateTime  @default(now())
+  updatedAt                  DateTime  @updatedAt
+  customer Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  bookings Booking[]
+}
+
+model Booking {
+  id                String        @id @default(cuid())
+  bookingReference  String        @unique
+  customerId        String
+  agentId           String
+  packageId         String
+  kycDataId         String?
+  travelDate        DateTime      @db.Date
+  numberOfTravelers Int           @default(1)
+  travelerDetails   Json?
+  totalAmount       Decimal       @db.Decimal(10, 2)
+  taxAmount         Decimal       @default(0.00) @db.Decimal(10, 2)
+  discountAmount    Decimal       @default(0.00) @db.Decimal(10, 2)
+  netAmount         Decimal       @db.Decimal(10, 2)
+  agentCommission   Decimal       @db.Decimal(10, 2)
+  paymentMethod     PaymentMethod
+  emiTenure         Int?
+  monthlyEmiAmount  Decimal?      @db.Decimal(10, 2)
+  status            BookingStatus @default(kycPending)
+  isAgreementSigned Boolean       @default(false)
+  agreementSignedAt DateTime?
+  tripCompletedAt   DateTime?
+  specialRequests   String?
+  refundAmount      Decimal?      @db.Decimal(10, 2)
+  refundProcessedAt DateTime?
+  refundReason      String?
+  deletedAt         DateTime?     
+  deletedBy         String?       
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime      @updatedAt
+  customer         Customer          @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  agent            Agent             @relation(fields: [agentId], references: [id], onDelete: Cascade)
+  package          Package           @relation(fields: [packageId], references: [id], onDelete: Cascade)
+  kycData          KycData?          @relation(fields: [kycDataId], references: [id])
+  paymentSchedules PaymentSchedule[]
+  transactions     Transaction[]
+  commissions      AgentCommission[]
+  documents        Document[]
+  reviews          Review[]
+  notifications    Notification[]
+}
+
+model PaymentSchedule {
+  id                String        @id @default(cuid())
+  bookingId         String
+  installmentNumber Int
+  dueDate           DateTime      @db.Date
+  amount            Decimal       @db.Decimal(10, 2)
+  status            PaymentStatus @default(pending)
+  paidAt            DateTime?
+  paymentMethod     String?
+  transactionId     String?
+  lateFee           Decimal       @default(0.00) @db.Decimal(10, 2)
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime      @updatedAt
+  booking Booking @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+}
+
+model Transaction {
+  id                   String    @id @default(cuid())
+  transactionReference String    @unique
+  bookingId            String?
+  customerId           String?
+  agentId              String?
+  type                 String
+  amount               Decimal   @db.Decimal(12, 2)
+  currency             String    @default("INR")
+  status               String
+  gatewayTransactionId String?
+  gatewayResponse      Json?
+  description          String?
+  gatewayFee           Decimal?  @db.Decimal(10, 2)
+  processingFee        Decimal?  @db.Decimal(10, 2)
+  taxAmount            Decimal?  @db.Decimal(10, 2)
+  netAmount            Decimal   @db.Decimal(12, 2)
+  createdAt            DateTime  @default(now())
+  updatedAt            DateTime  @updatedAt
+  booking  Booking?  @relation(fields: [bookingId], references: [id])
+  customer Customer? @relation(fields: [customerId], references: [id])
+  agent    Agent?    @relation(fields: [agentId], references: [id])
+}
+
+model AgentCommission {
+  id               String        @id @default(cuid())
+  agentId          String
+  bookingId        String
+  commissionAmount Decimal       @db.Decimal(10, 2)
+  commissionRate   Decimal       @db.Decimal(5, 2)
+  bookingAmount    Decimal       @db.Decimal(10, 2)
+  status           PaymentStatus @default(pending)
+  payoutDate       DateTime?     @db.Date
+  payoutReference  String?
+  taxDeducted      Decimal       @default(0.00) @db.Decimal(10, 2)
+  processingFee    Decimal       @default(0.00) @db.Decimal(10, 2)
+  netPayout        Decimal       @db.Decimal(10, 2)
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+  agent   Agent   @relation(fields: [agentId], references: [id], onDelete: Cascade)
+  booking Booking @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+}
+
+model Review {
+  id               String       @id @default(cuid())
+  userId           String
+  customerId       String
+  agentId          String?
+  packageId        String?
+  bookingId        String?
+  rating           Int
+  title            String?
+  comment          String?
+  pros             String[]
+  cons             String[]
+  photos           String[]
+  status           ReviewStatus @default(pending)
+  isVerified       Boolean      @default(false)
+  helpfulVotes     Int          @default(0)
+  unhelpfulVotes   Int          @default(0)
+  moderatedBy      String?
+  moderatedAt      DateTime?
+  moderationNotes  String?
+  createdAt        DateTime     @default(now())
+  updatedAt        DateTime     @updatedAt
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  customer Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  agent    Agent?   @relation(fields: [agentId], references: [id])
+  package  Package? @relation(fields: [packageId], references: [id])
+  booking  Booking? @relation(fields: [bookingId], references: [id])
+}
+
+model Notification {
+  id           String             @id @default(cuid())
+  userId       String?
+  bookingId    String?
+  title        String
+  message      String
+  type         NotificationType
+  status       NotificationStatus @default(pending)
+  channel      String
+  metadata     Json?
+  scheduledFor DateTime?
+  sentAt       DateTime?
+  deliveredAt  DateTime?
+  readAt       DateTime?
+  errorMessage String?
+  retryCount   Int                @default(0)
+  maxRetries   Int                @default(3)
+  createdAt    DateTime           @default(now())
+  updatedAt    DateTime           @updatedAt
+  user    User?    @relation(fields: [userId], references: [id])
+  booking Booking? @relation(fields: [bookingId], references: [id])
+}
+
+model SupportTicket {
+  id           String         @id @default(cuid())
+  ticketNumber String         @unique
+  userId       String
+  subject      String
+  description  String
+  category     String
+  priority     TicketPriority @default(medium)
+  status       TicketStatus   @default(open)
+  assignedTo   String?
+  assignedAt   DateTime?
+  resolution   String?
+  resolvedAt   DateTime?
+  resolvedBy   String?
+  attachments  String[]
+  tags         String[]
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  user          User            @relation(fields: [userId], references: [id])
+  assignedAdmin AdminUser?      @relation("AssignedTickets", fields: [assignedTo], references: [id])
+  resolverAdmin AdminUser?      @relation("ResolvedTickets", fields: [resolvedBy], references: [id])
+  messages      TicketMessage[]
+}
+
+model TicketMessage {
+  id          String   @id @default(cuid())
+  ticketId    String
+  userId      String
+  message     String
+  attachments String[]
+  isInternal  Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  ticket SupportTicket @relation(fields: [ticketId], references: [id], onDelete: Cascade)
+  user   User          @relation(fields: [userId], references: [id])
+}
+
+model SystemSetting {
+  id           String     @id @default(cuid())
+  settingKey   String     @unique
+  settingValue Json
+  description  String?
+  isPublic     Boolean    @default(false)
+  updatedBy    String?
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  updater AdminUser? @relation(fields: [updatedBy], references: [id])
+}
+
+model PackageImage {
+  id           String   @id @default(cuid())
+  packageId    String
+  imageUrl     String
+  imageName    String
+  isCover      Boolean  @default(false)
+  displayOrder Int      @default(0)
+  uploadedAt   DateTime @default(now())
+  package Package @relation(fields: [packageId], references: [id], onDelete: Cascade)
+}
+
+model Document {
+  id           String       @id @default(cuid())
+  userId       String?
+  bookingId    String?
+  documentType DocumentType
+  fileUrl      String
+  fileName     String
+  fileSize     Int
+  mediaType    String
+  uploadedAt   DateTime     @default(now())
+  user    User?    @relation(fields: [userId], references: [id])
+  booking Booking? @relation(fields: [bookingId], references: [id])
 }
