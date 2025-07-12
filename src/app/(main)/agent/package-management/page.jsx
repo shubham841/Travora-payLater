@@ -1,6 +1,7 @@
 'use client';
 import { useState } from 'react';
 import { Pencil, Trash2, Plus, EyeOff, Eye } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 const initialPackages = [
   {
@@ -81,7 +82,7 @@ export default function PackageManagement() {
   };
 
   return (
-    <div className="min-h-screen bg-blue-100 p-4">
+    <div className="min-h-screen bg-blue-100 py-4 px-7">
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-2xl font-bold">Package Management</h2>
         <button

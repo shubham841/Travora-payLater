@@ -48,11 +48,11 @@ export default function PayoutsPage() {
   const filteredData = payoutsData.filter((p) => p.status === activeTab);
 
   return (
-    <div className="min-h-screen bg-blue-100">
+    <div className="min-h-screen bg-blue-100 ">
       
 
       {/* Main Section */}
-      <main className="p-4">
+      <main className="py-4 px-7">
         <h2 className="text-2xl font-bold mb-4">Commission & Payouts</h2>
 
         {/* Tabs */}

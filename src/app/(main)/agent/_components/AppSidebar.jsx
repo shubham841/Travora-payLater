@@ -1,17 +1,9 @@
 "use client";
 import { MessageSquare, Home, NotebookText, ClipboardList, Settings,BadgeDollarSign } from "lucide-react";
-import {
-  Sidebar,
-  SidebarContent,
-  SidebarGroup,
-  SidebarGroupContent,
-  SidebarGroupLabel,
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
-} from "@/components/ui/sidebar";
+
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "./sidebar";
 
 // Menu items.
 const items = [
@@ -48,9 +40,9 @@ export default function AppSidebar() {
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupLabel>
-            <h2 className="font-bold text-blue-700 text-2xl mt-12 px-2">Pay Later</h2>
+            {/* <h2 className="font-bold text-hardBlue text-2xl mt-24 px-2">Pay Later</h2> */}
           </SidebarGroupLabel>
-            <div className="mt-16 p-2">
+            <div className="mt-6 px-4">
               <SidebarGroupContent>
                 <SidebarMenu>
                   {items.map((item) => (
@@ -58,13 +50,13 @@ export default function AppSidebar() {
                       <SidebarMenuButton asChild>
                         <Link
                           href={item.url}
-                          className={`text-[17px] ${
+                          className={`text-[20px] my-2 ${
                             path.includes(item.url) &&
-                            "text-primary bg-blue-100"
+                            "text-primary bg-blue-50"
                           }`}
                         >
-                          <item.icon />
-                          <span>{item.title}</span>
+                          <item.icon/>
+                          <div className="mt-1 text-center h-7">{item.title}</div>
                         </Link>
                       </SidebarMenuButton>
                     </SidebarMenuItem>
@@ -75,6 +67,16 @@ export default function AppSidebar() {
         
         </SidebarGroup>
       </SidebarContent>
+      <SidebarFooter>
+         <div className="leftSide absolute right-6 bottom-3">
+          <Link href="/">
+            <div>
+              <p className="text-[#0057D8] font-bold text-2xl ">Pay Later</p>
+              <p className="text-[#0057D8] font-bold mt-2">By Travora </p>
+            </div>
+          </Link>
+          </div>
+      </SidebarFooter>
     </Sidebar>
   );
 }

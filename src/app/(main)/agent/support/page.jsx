@@ -32,7 +32,7 @@ export default function SupportPage() {
   const filteredTickets = ticketsData.filter(t => t.status === activeTab);
 
   return (
-    <div className="min-h-screen bg-blue-100 p-4">
+    <div className="min-h-screen bg-blue-100 py-4 px-7 ">
       <h2 className="text-2xl font-bold mb-4">Support & Help</h2>
 
       {/* Tabs */}

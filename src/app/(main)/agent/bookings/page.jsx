@@ -34,32 +34,65 @@ const statusColors = {
 export default function BookingsPage() {
   const [filter, setFilter] = useState({ date: '', package: '', status: '' });
   const [selected, setSelected] = useState(null);
+  const [showPackageDropdown, setShowPackageDropdown] = useState(false);
+
+  const allPackages = [...new Set(bookingsData.map(b => b.package))];
 
   const filtered = bookingsData.filter(b =>
     (!filter.date || b.date.includes(filter.date)) &&
-    (!filter.package || b.package.includes(filter.package)) &&
+    (!filter.package || b.package.toLowerCase().includes(filter.package.toLowerCase())) &&
     (!filter.status || b.status === filter.status)
   );
 
   return (
-    <div className="p-4 bg-blue-100 min-h-screen">
+    <div className="py-4 px-7 bg-blue-100 min-h-screen">
       <h2 className="text-2xl font-bold mb-4">Bookings Tracker</h2>
 
       {/* Filters */}
-      <div className="flex flex-col md:flex-row gap-4 mb-4">
+      <div className="flex flex-col md:flex-row gap-4 mb-4 relative">
         <input
           type="date"
           className="p-2 rounded border"
           value={filter.date}
           onChange={e => setFilter({ ...filter, date: e.target.value })}
         />
-        <input
-          type="text"
-          placeholder="Search Package"
-          className="p-2 rounded border"
-          value={filter.package}
-          onChange={e => setFilter({ ...filter, package: e.target.value })}
-        />
+
+        {/* Package input + button */}
+        <div className="relative">
+          <div className="flex">
+            <input
+              type="text"
+              placeholder="Search Package"
+              className="p-2 rounded-l border border-r-0"
+              value={filter.package}
+              onChange={e => setFilter({ ...filter, package: e.target.value })}
+            />
+            <button
+              onClick={() => setShowPackageDropdown(prev => !prev)}
+              className="px-3 rounded-r border border-l-0 bg-white hover:bg-gray-100"
+            >
+              ▼
+            </button>
+          </div>
+          {showPackageDropdown && (
+            <div className="absolute z-10 w-full bg-white border rounded mt-1 shadow">
+              {allPackages.map(pkg => (
+                <div
+                  key={pkg}
+                  onClick={() => {
+                    setFilter({ ...filter, package: pkg });
+                    setShowPackageDropdown(false);
+                  }}
+                  className="px-4 py-2 hover:bg-blue-100 cursor-pointer"
+                >
+                  {pkg}
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+
+        {/* Status filter */}
         <select
           className="p-2 rounded border"
           value={filter.status}

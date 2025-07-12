@@ -78,7 +78,7 @@ const activities = [
 
 export default function RecentActivityCard() {
   return (
-    <div className="max-w-xl  p-8 rounded-2xl space-y-4 sm:p-6 md:p-8">
+    <div className="max-w-xl  p-8 rounded-2xl space-y-4 sm:p-6 md:py-8 md:px-3">
       
       {activities.map((item) => (
         <div key={item.id} className="flex items-start space-x-4">

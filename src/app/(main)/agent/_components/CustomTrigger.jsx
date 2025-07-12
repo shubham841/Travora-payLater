@@ -1,6 +1,6 @@
 "use client"
-import { useSidebar } from "@/components/ui/sidebar"
 import { Menu } from "lucide-react"
+import { useSidebar } from "./sidebar"
 
 export function CustomTrigger() {
   const { toggleSidebar } = useSidebar()

@@ -1,6 +1,6 @@
-import { SidebarProvider} from "@/components/ui/sidebar";
 import AppHeader from "./_components/AppHeader";
 import AppSidebar from "./_components/AppSidebar";
+import { SidebarProvider } from "./_components/sidebar";
 
 export default function Provider({ children }) {
   return (

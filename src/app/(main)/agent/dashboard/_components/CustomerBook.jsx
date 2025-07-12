@@ -42,17 +42,17 @@ const statusColors = {
 
 export default function CustomerBookingsTable() {
   return (
-    <div className=" p-6 overflow-x-auto">
+    <div className=" py-4 overflow-x-auto rounded-md">
       
 
       <table className="min-w-full text-sm sm:text-base table-auto">
-        <thead>
-          <tr className="bg-gray-100 text-gray-600 uppercase text-left">
-            <th className="px-4 py-2">Customer</th>
-            <th className="px-4 py-2">Package</th>
-            <th className="px-4 py-2">Date</th>
-            <th className="px-4 py-2">Status</th>
-            <th className="px-4 py-2">Amount</th>
+        <thead className="">
+          <tr className="bg-softBlue  text-gray-600 uppercase text-left">
+            <th className="px-2 py-3 rounded-l-lg">Customer</th>
+            <th className="px-2 py-3">Package</th>
+            <th className="px-2 py-3">Date</th>
+            <th className="px-2 py-3">Status</th>
+            <th className="px-2 py-3 rounded-r-lg">Amount</th>
           </tr>
         </thead>
         <tbody>
@@ -61,17 +61,17 @@ export default function CustomerBookingsTable() {
               key={index}
               className="border-b border-gray-200 hover:bg-gray-50 transition-colors"
             >
-              <td className="px-4 py-3 font-medium">{booking.customer}</td>
-              <td className="px-4 py-3 text-blue-600">{booking.package}</td>
-              <td className="px-4 py-3">{booking.date}</td>
-              <td className="px-4 py-3">
+              <td className="px-2 py-5 font-medium">{booking.customer}</td>
+              <td className="px-2 py-5 text-blue-600">{booking.package}</td>
+              <td className="px-2 py-5">{booking.date}</td>
+              <td className="px-2 py-5">
                 <span
                   className={`px-3 py-1 rounded-full text-xs font-medium ${statusColors[booking.status]}`}
                 >
                   {booking.status}
                 </span>
               </td>
-              <td className="px-4 py-3 font-semibold">{booking.amount}</td>
+              <td className="px-4 py-3 font-semibold text-orange">{booking.amount}</td>
             </tr>
           ))}
         </tbody>
