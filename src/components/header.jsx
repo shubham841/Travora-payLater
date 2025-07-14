@@ -79,9 +79,11 @@ const Header = () => {
           </div>
 
           <div className="btn">
+            <Link href={"/auth/agent/login"}>
             <Button className="bg-[#F28500] text-white text-base px-5 py-2 md:mr-4 rounded-xl hover:bg-orange-600 hover:shadow-lg hover:scale-105 transition-all duration-300">
               Login
             </Button>
+            </Link>
           </div>
         </div>
       </nav>

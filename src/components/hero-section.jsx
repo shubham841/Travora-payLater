@@ -12,6 +12,8 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import Link from "next/link";
+import Footer from "./footer";
+import Header from "./header";
 
 const packages = [
   {
@@ -90,6 +92,8 @@ const packages = [
 
 const HeroSection = () => {
   return (
+    <>
+    <Header />
     <main>
       <section className="heroSection h-[730px] md:h-[650px] bg-custom-gradient flex flex-col lg:flex-row items-center justify-evenly">
         <div className="left px-8 md:py-6 lg:py-12  ">
@@ -114,9 +118,11 @@ const HeroSection = () => {
               </Button>
             </div>
             <div>
+              <Link href={"/auth/agent/signup"}>
               <Button size="mdl" className="bg-gray-300  rounded-2xl border-2 ">
                 Become an Agent
               </Button>
+              </Link>
             </div>
           </div>
         </div>
@@ -475,6 +481,8 @@ const HeroSection = () => {
         </div>
       </section>
     </main>
+    <Footer />
+    </>
   );
 };
 
